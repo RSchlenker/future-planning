@@ -1,14 +1,14 @@
 <template>
-  <HelloWorld msg="Welcome to finance calculator"/>
+  <WelcomePage msg="Welcome to finance calculator" />
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from './components/HelloWorld.vue';
+import { Options, Vue } from 'vue-class-component'
+import WelcomePage from './components/WelcomePage.vue'
 
 @Options({
   components: {
-    HelloWorld,
+    WelcomePage,
   },
 })
 export default class App extends Vue {}
