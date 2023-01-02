@@ -1,31 +1,30 @@
 <template>
-  <LineChart :data="data" :x-axis="labels" />
+  <div class="chart-wrapper">
+    <div class="future-chart">
+      <LineChart :data="data" :x-axis="labels" />
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
+import { defineComponent, defineProps } from 'vue'
 import LineChart from '@/components/LineChart'
 import WelcomePage from '@/components/WelcomePage'
 import { simulate } from '@/core/simulator'
-import {
-  buySomething,
-  etfs,
-  interestRate,
-  monthlyIncome,
-  monthlyIncomeWithYearlyChange,
-  monthlyOutcomeWithYearlyChange,
-} from '@/core/finances'
 
-const factors = [
-  monthlyIncomeWithYearlyChange(3500, 0.03, 2022),
-  monthlyIncome(2750),
-  monthlyOutcomeWithYearlyChange(1400, 0.02, 2022),
-  monthlyOutcomeWithYearlyChange(1000, 0.03, 2022),
-  buySomething(700000, 2026),
-  etfs(0.03),
-  interestRate(0.1),
-]
-const simulationResult = simulate(factors, 2022, 2042, 50000)
+const props = defineProps({
+  factors: Array,
+  startYear: String,
+  endYear: String,
+  startVolume: Number,
+})
+
+const simulationResult = simulate(
+  props.factors,
+  props.startYear,
+  props.endYear,
+  props.startVolume,
+)
 const labels = simulationResult.map((res) => res.year)
 const data = [
   {
@@ -36,3 +35,14 @@ const data = [
 
 defineComponent({ LineChart, WelcomePage })
 </script>
+
+<style lang="css" scoped>
+.chart-wrapper {
+  width: 100%;
+  margin: auto;
+}
+.future-chart {
+  width: 60%;
+  margin: auto;
+}
+</style>
