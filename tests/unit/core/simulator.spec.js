@@ -12,7 +12,28 @@ import { simulate } from '@/core/simulator'
 it('should simulate a basic scenario over 4 years', () => {
   const factors = [income(1000)]
   const simulationResult = simulate(factors, 2022, 2026, 0)
-  expect(simulationResult).toEqual([0, 1000, 2000, 3000, 4000])
+  expect(simulationResult).toEqual([
+    {
+      year: 2022,
+      volume: 0,
+    },
+    {
+      year: 2023,
+      volume: 1000,
+    },
+    {
+      year: 2024,
+      volume: 2000,
+    },
+    {
+      year: 2025,
+      volume: 3000,
+    },
+    {
+      year: 2026,
+      volume: 4000,
+    },
+  ])
 })
 
 it('should simulate a more complex scenario over 10 years', () => {

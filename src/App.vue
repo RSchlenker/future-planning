@@ -1,17 +1,14 @@
 <template>
-  <WelcomePage msg="Welcome to finance calculator" />
+  <WelcomePage />
+  <FuturePredictionChart />
 </template>
-
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+<script setup lang="ts">
 import WelcomePage from './components/WelcomePage.vue'
+import LineChart from '@/components/LineChart.vue'
+import { defineComponent } from 'vue'
+import FuturePredictionChart from '@/components/FuturePredictionChart.vue'
 
-@Options({
-  components: {
-    WelcomePage,
-  },
-})
-export default class App extends Vue {}
+defineComponent({ LineChart, WelcomePage })
 </script>
 
 <style>

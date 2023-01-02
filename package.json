@@ -5,19 +5,23 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test": "jest",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "chart.js": "^4.1.1",
     "core-js": "^3.8.3",
+    "jest-canvas-mock": "^2.4.0",
     "ramda": "^0.28.0",
     "vue": "^3.2.13",
-    "vue-class-component": "^8.0.0-0"
+    "vue-class-component": "^7.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@types/jest": "^27.0.1",
+    "@types/ramda": "^0.28.20",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",
