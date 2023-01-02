@@ -7,32 +7,39 @@
 </template>
 
 <script setup>
-import { defineComponent, defineProps } from 'vue'
+import { defineComponent, defineProps, ref, watch } from 'vue'
 import LineChart from '@/components/LineChart'
 import WelcomePage from '@/components/WelcomePage'
 import { simulate } from '@/core/simulator'
 
 const props = defineProps({
   factors: Array,
-  startYear: String,
-  endYear: String,
+  startYear: Number,
+  endYear: Number,
   startVolume: Number,
 })
 
-const simulationResult = simulate(
-  props.factors,
-  props.startYear,
-  props.endYear,
-  props.startVolume,
-)
-const labels = simulationResult.map((res) => res.year)
-const data = [
-  {
-    label: 'future',
-    data: simulationResult.map((res) => res.volume),
-  },
-]
+let simulationResult
+let labels = ref(null)
+let data = ref(null)
+const resimulate = () => {
+  simulationResult = simulate(
+    props.factors,
+    props.startYear,
+    props.endYear,
+    props.startVolume,
+  )
+  labels.value = simulationResult.map((res) => res.year)
+  data = [
+    {
+      label: 'future',
+      data: simulationResult.map((res) => res.volume),
+    },
+  ]
+}
 
+resimulate()
+watch(() => props.factors, resimulate, { deep: true })
 defineComponent({ LineChart, WelcomePage })
 </script>
 
