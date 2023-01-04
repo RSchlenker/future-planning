@@ -11,6 +11,9 @@ import {
   incomeWithYearlyChange,
   outcomeWithYearlyChange,
   outcome,
+  fromYear,
+  untilYear,
+  fromToYear,
 } from '@/core/finances'
 import { multipleYears } from '@/core/future'
 import * as R from 'ramda'
@@ -106,4 +109,22 @@ it('Should increase yearly income every year', () => {
     0,
   )
   expect(after3Years).toBe(200 + 200 * 1.05 + 200 * 1.05 * 1.05)
+})
+
+it('Should start income only from year x', () => {
+  const delayedIncome = fromYear(2023, income(1000))
+  const after3Years = multipleYears([delayedIncome], 2022, 4, 0)
+  expect(after3Years).toBe(3000)
+})
+
+it('Should have income until year x', () => {
+  const incomeUntil = untilYear(2024, income(1000))
+  const after3Years = multipleYears([incomeUntil], 2022, 4, 0)
+  expect(after3Years).toBe(3000)
+})
+
+it('Should have income from - to year x,y', () => {
+  const incomeUntil = fromToYear(2024, 2025, income(1000))
+  const after3Years = multipleYears([incomeUntil], 2022, 4, 0)
+  expect(after3Years).toBe(2000)
 })

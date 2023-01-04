@@ -49,3 +49,33 @@ const multiplyWhenNegative = R.ifElse(R.lt(R.__, 0), R.multiply, R.identity)
 export const withRate = (rate) => {
   return 1 + rate
 }
+
+export const fromYear = (year, fn) => {
+  return (amount, currentYear) => {
+    if (currentYear >= year) {
+      return fn(amount)
+    } else {
+      return amount
+    }
+  }
+}
+
+export const untilYear = (year, fn) => {
+  return (amount, currentYear) => {
+    if (currentYear <= year) {
+      return fn(amount)
+    } else {
+      return amount
+    }
+  }
+}
+
+export const fromToYear = (from, to, fn) => {
+  return (amount, currentYear) => {
+    if (currentYear >= from && currentYear <= to) {
+      return fn(amount)
+    } else {
+      return amount
+    }
+  }
+}
