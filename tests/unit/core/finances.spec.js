@@ -14,6 +14,8 @@ import {
   fromYear,
   untilYear,
   fromToYear,
+  reducedDuring,
+  reduce,
 } from '@/core/finances'
 import { multipleYears } from '@/core/future'
 import * as R from 'ramda'
@@ -127,4 +129,16 @@ it('Should have income from - to year x,y', () => {
   const incomeUntil = fromToYear(2024, 2025, income(1000))
   const after3Years = multipleYears([incomeUntil], 2022, 4, 0)
   expect(after3Years).toBe(2000)
+})
+
+it('Should have reduced income during 2 years', () => {
+  const gappedIncome = reducedDuring(2024, 2026, 0.5, income(1000))
+  const after4Years = multipleYears([gappedIncome], 2022, 6, 0)
+  expect(after4Years).toBe(1000 + 1000 + 2 * 500 + 2 * 1000)
+})
+
+it('Should reduce income to work with half-time job', () => {
+  const reducedIncome = reduce(0.5, income(1000))
+  const after3Years = multipleYears([reducedIncome], 2022, 3, 0)
+  expect(after3Years).toBe(1500)
 })

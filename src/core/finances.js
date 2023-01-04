@@ -63,7 +63,7 @@ export const fromYear = (year, fn) => {
 export const untilYear = (year, fn) => {
   return (amount, currentYear) => {
     if (currentYear <= year) {
-      return fn(amount)
+      return fn(amount, currentYear)
     } else {
       return amount
     }
@@ -73,9 +73,27 @@ export const untilYear = (year, fn) => {
 export const fromToYear = (from, to, fn) => {
   return (amount, currentYear) => {
     if (currentYear >= from && currentYear <= to) {
-      return fn(amount)
+      return fn(amount, currentYear)
     } else {
       return amount
+    }
+  }
+}
+
+export const reduce = (factor, fn) => {
+  return (amount, currentYear) => {
+    const difference = fn(amount, currentYear) - amount
+    return amount + difference * factor
+  }
+}
+
+export const reducedDuring = (from, to, factor, fn) => {
+  return (amount, currentYear) => {
+    if (currentYear < from || currentYear >= to) {
+      return fn(amount, currentYear)
+    } else {
+      const difference = fn(amount, currentYear) - amount
+      return amount + difference * factor
     }
   }
 }
