@@ -138,7 +138,8 @@ it('Should have reduced income during 2 years', () => {
 })
 
 it('Should reduce income to work with half-time job', () => {
-  const reducedIncome = reduce(0.5, income(1000))
+  const factorToReduce = 0.5
+  const reducedIncome = reduce(factorToReduce, income(1000))
   const after3Years = multipleYears([reducedIncome], 2022, 3, 0)
   expect(after3Years).toBe(1500)
 })

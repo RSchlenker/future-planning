@@ -35,7 +35,7 @@ watch(
   () => props.data,
   (newValue) => {
     chartObject.data.datasets = newValue
-    chartObject.update()
+    chartObject.update('resize')
   },
   { deep: true },
 )

@@ -2,69 +2,37 @@
   <FuturePredictionChart
     :factors="factors"
     :start-year="2024"
-    :end-year="2044"
+    :end-year="2060"
     :start-volume="50000"
   />
   <div class="control-panel">
-    <q-badge color="secondary"> Hauskauf: {{ hausKaufDatum }} </q-badge>
-    <q-slider
-      v-model="hausKaufDatum"
-      :min="2024"
-      :max="2044"
-      @change="createChart"
-    />
+    <living-costs-panel @change="updateLivingCosts" :start-year="2024" />
+    <income-panel @change="updateIncome" :start-year="2024" />
   </div>
 </template>
 <script setup lang="ts">
 import LineChart from '@/components/LineChart.vue'
+import LivingCostsPanel from '@/components/LivingCostsPanel.vue'
+import IncomePanel from '@/components/IncomePanel.vue'
 import { defineComponent, ref } from 'vue'
-import * as R from 'ramda'
 import FuturePredictionChart from '@/components/FuturePredictionChart.vue'
 import {
-  buySomething,
   etfs,
   fromYear,
   interestRate,
-  monthlyIncome,
-  monthlyIncomeWithYearlyChange,
   monthlyOutcome,
   monthlyOutcomeWithYearlyChange,
   outcome,
-  reduce,
-  reducedDuring,
-  untilYear,
 } from '@/core/finances'
 
-defineComponent({ LineChart })
+defineComponent({ LineChart, LivingCostsPanel, IncomePanel })
 
-const incomeRobin = reduce(
-  1,
-  reducedDuring(
-    2027,
-    2029,
-    0.5,
-    monthlyIncomeWithYearlyChange(3800, 0.02, 2024),
-  ),
-)
-const incomeMaren = reduce(
-  1,
-  reducedDuring(2027, 2034, 0.4, monthlyIncome(3000)),
-)
-const miete = untilYear(2029, monthlyOutcomeWithYearlyChange(1400, 0.02, 2024))
-const hausUnterhalt = fromYear(2020, monthlyOutcome(300))
 const unterhalt = monthlyOutcomeWithYearlyChange(1000, 0.03, 2024)
 const kind1 = fromYear(2027, monthlyOutcome(250))
 const kind2 = fromYear(2029, monthlyOutcome(250))
 const urlaub = outcome(4000)
 
-const hausKaufDatum = ref(2029)
-const hausPreis = ref(700000)
-
 let initialFactors = [
-  incomeRobin,
-  incomeMaren,
-  miete,
-  hausUnterhalt,
   unterhalt,
   etfs(0.03),
   interestRate(0.1),
@@ -75,12 +43,21 @@ let initialFactors = [
 
 let factors = ref(initialFactors)
 
-const createChart = () => {
-  const hauskauf = buySomething(hausPreis.value, hausKaufDatum.value)
-  factors.value = R.append(hauskauf, initialFactors as []) as []
-}
+let livingCostsStored: any = []
+let incomeStored: any = []
 
-createChart()
+const updateLivingCosts = (livingCosts: any) => {
+  livingCostsStored = livingCosts
+  console.log('living costs changed', livingCosts)
+  console.log(incomeStored)
+  factors.value = [...livingCosts, ...initialFactors, ...incomeStored]
+}
+const updateIncome = (income: any) => {
+  incomeStored = income
+  console.log('income changed', income)
+  console.log(livingCostsStored)
+  factors.value = [...livingCostsStored, ...initialFactors, ...income]
+}
 </script>
 
 <style>
@@ -93,7 +70,8 @@ createChart()
   margin-top: 60px;
 }
 .control-panel {
+  display: flex;
+  justify-content: space-between;
   padding: 2rem;
-  width: 50%;
 }
 </style>
