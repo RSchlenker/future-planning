@@ -8,11 +8,13 @@
   <div class="control-panel">
     <living-costs-panel @change="updateLivingCosts" :start-year="2024" />
     <income-panel @change="updateIncome" :start-year="2024" />
+    <dynamic-panel @change="updateDynamicValues" :start-year="2024" />
   </div>
 </template>
 <script setup lang="ts">
 import LineChart from '@/components/LineChart.vue'
 import LivingCostsPanel from '@/components/LivingCostsPanel.vue'
+import DynamicPanel from '@/components/DynamicPanel.vue'
 import IncomePanel from '@/components/IncomePanel.vue'
 import { defineComponent, ref } from 'vue'
 import FuturePredictionChart from '@/components/FuturePredictionChart.vue'
@@ -25,7 +27,7 @@ import {
   outcome,
 } from '@/core/finances'
 
-defineComponent({ LineChart, LivingCostsPanel, IncomePanel })
+defineComponent({ LineChart, LivingCostsPanel, IncomePanel, DynamicPanel })
 
 const unterhalt = monthlyOutcomeWithYearlyChange(1000, 0.03, 2024)
 const kind1 = fromYear(2027, monthlyOutcome(250))
@@ -45,18 +47,28 @@ let factors = ref(initialFactors)
 
 let livingCostsStored: any = []
 let incomeStored: any = []
+let dynamicFields: any = []
+
+const regenerateFactors = () => {
+  factors.value = [
+    ...initialFactors,
+    ...incomeStored,
+    ...livingCostsStored,
+    ...dynamicFields,
+  ]
+}
 
 const updateLivingCosts = (livingCosts: any) => {
   livingCostsStored = livingCosts
-  console.log('living costs changed', livingCosts)
-  console.log(incomeStored)
-  factors.value = [...livingCosts, ...initialFactors, ...incomeStored]
+  regenerateFactors()
 }
 const updateIncome = (income: any) => {
   incomeStored = income
-  console.log('income changed', income)
-  console.log(livingCostsStored)
-  factors.value = [...livingCostsStored, ...initialFactors, ...income]
+  regenerateFactors()
+}
+const updateDynamicValues = (newFields: any) => {
+  dynamicFields = newFields
+  regenerateFactors()
 }
 </script>
 
