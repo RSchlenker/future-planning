@@ -3,9 +3,14 @@
     <div class="row no-wrap q-pa-md">
       <div class="column">
         <div class="text-h6">Investition</div>
-        <q-input v-model="name" label="Name" />
-        <q-input v-model="price" label="Preis" />
-        <q-select v-model="year" :options="yearOptions" label="Jahr" />
+        <q-input dense class="q-mb-sm" v-model="name" label="Name" />
+        <q-input dense class="q-mb-sm" v-model="price" label="Preis" />
+        <q-select
+          size="sm"
+          v-model="year"
+          :options="yearOptions"
+          label="Jahr"
+        />
         <q-btn
           color="primary"
           label="Add"
@@ -38,5 +43,8 @@ const yearOptions = ref(R.range(props.startYear, 2050))
 
 const newInvestment = () => {
   emit('update', new BuySomethingFactor(name.value, price.value, year.value))
+  name.value = ''
+  price.value = 10000
+  year.value = props.startYear
 }
 </script>

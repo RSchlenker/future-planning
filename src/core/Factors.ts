@@ -1,9 +1,23 @@
-import { buySomething } from '@/core/finances'
+import { buySomething, monthlyIncomeWithYearlyChange } from '@/core/finances'
 
 export interface DynamicFactor {
   id: string
   factor: Function | never
   name: string
+}
+
+export class IncomeFactor implements DynamicFactor {
+  id: string
+  name: string
+  amount: Number
+  factor: Function
+
+  constructor(name: string, amount: Number, change: Number, startYear: Number) {
+    this.id = 'income'
+    this.name = name
+    this.amount = amount
+    this.factor = monthlyIncomeWithYearlyChange(amount, change, startYear)
+  }
 }
 
 export class BuySomethingFactor implements DynamicFactor {

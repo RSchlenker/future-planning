@@ -5,10 +5,14 @@
     :end-year="2060"
     :start-volume="50000"
   />
-  <div class="control-panel">
+  <dynamic-panel
+    @change="updateDynamicValues"
+    class="q-mt-md"
+    :start-year="2024"
+  />
+  <div class="control-panel" v-show="false">
     <living-costs-panel @change="updateLivingCosts" :start-year="2024" />
     <income-panel @change="updateIncome" :start-year="2024" />
-    <dynamic-panel @change="updateDynamicValues" :start-year="2024" />
   </div>
 </template>
 <script setup lang="ts">
