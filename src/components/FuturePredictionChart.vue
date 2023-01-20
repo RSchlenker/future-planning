@@ -9,7 +9,6 @@
 <script setup>
 import { defineComponent, defineProps, ref, watch } from 'vue'
 import LineChart from '@/components/LineChart'
-import WelcomePage from '@/components/WelcomePage'
 import { simulate } from '@/core/simulator'
 
 const props = defineProps({
@@ -40,7 +39,7 @@ const resimulate = () => {
 
 resimulate()
 watch(() => props.factors, resimulate, { deep: true })
-defineComponent({ LineChart, WelcomePage })
+defineComponent({ LineChart })
 </script>
 
 <style lang="css" scoped>
