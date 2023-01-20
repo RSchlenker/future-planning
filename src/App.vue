@@ -10,7 +10,7 @@
     class="q-mt-md"
     :start-year="2024"
   />
-  <div class="control-panel" v-show="false">
+  <div class="control-panel" v-if="false">
     <living-costs-panel @change="updateLivingCosts" :start-year="2024" />
     <income-panel @change="updateIncome" :start-year="2024" />
   </div>
@@ -22,30 +22,10 @@ import DynamicPanel from '@/components/DynamicPanel.vue'
 import IncomePanel from '@/components/IncomePanel.vue'
 import { defineComponent, ref } from 'vue'
 import FuturePredictionChart from '@/components/FuturePredictionChart.vue'
-import {
-  etfs,
-  fromYear,
-  interestRate,
-  monthlyOutcome,
-  monthlyOutcomeWithYearlyChange,
-  outcome,
-} from '@/core/finances'
+import { etfs, interestRate } from '@/core/finances'
 
 defineComponent({ LineChart, LivingCostsPanel, IncomePanel, DynamicPanel })
-
-const unterhalt = monthlyOutcomeWithYearlyChange(1000, 0.03, 2024)
-const kind1 = fromYear(2027, monthlyOutcome(250))
-const kind2 = fromYear(2029, monthlyOutcome(250))
-const urlaub = outcome(4000)
-
-let initialFactors = [
-  unterhalt,
-  etfs(0.03),
-  interestRate(0.1),
-  kind1,
-  kind2,
-  urlaub,
-]
+let initialFactors = [etfs(0.03), interestRate(0.1)]
 
 let factors = ref(initialFactors)
 
