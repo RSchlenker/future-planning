@@ -1,18 +1,18 @@
 <template>
   <q-card data-label="dynamic-panel">
     <q-card-section>
-      <h6 class="q-my-md">Faktoren</h6>
+      <h6 class="q-my-md">Factors</h6>
       <div class="row">
         <q-btn size="sm" class="q-mr-md">
-          Neue Investition
+          New Investment
           <InvestmentMenu @update="addFactor" :start-year="2024" />
         </q-btn>
         <q-btn size="sm" class="q-mr-md">
-          Neues Gehalt
+          New Income
           <IncomeMenu @update="addFactor" :start-year="2024" />
         </q-btn>
         <q-btn size="sm" class="q-mr-md">
-          Neue wiederkehrende Ausgabe
+          New recurring investment
           <OutcomeMenu
             @update="addFactor"
             :start-year="2024"
