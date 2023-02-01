@@ -37,9 +37,7 @@ export const multiplyWhenPositive = R.ifElse(
 )
 const multiplyWhenNegative = R.ifElse(R.lt(R.__, 0), R.multiply, R.identity)
 
-export const withRate = (rate) => {
-  return 1 + rate
-}
+export const withRate = (rate) => 1 + rate
 
 export const fromYear = (year, fn) => {
   return (amount, currentYear) => {
