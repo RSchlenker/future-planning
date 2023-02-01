@@ -22,12 +22,11 @@
       </div>
       <div class="q-pr-lg">
         <div v-for="(factor, index) in dynamicFields" :key="index">
-          <div v-if="factor instanceof BuySomethingFactor">
-            <InvestmentDisplay
-              @update="updateFactor(index, $event)"
-              :factor="factor"
-            />
-          </div>
+          <InvestmentDisplay
+            v-if="factor instanceof BuySomethingFactor"
+            @update="updateFactor(index, $event)"
+            :factor="factor"
+          />
           <div v-else-if="factor instanceof IncomeFactor">
             <div class="row no-wrap">
               <p class="factor-label">
@@ -36,12 +35,11 @@
               <q-linear-progress class="self-center" :value="1" />
             </div>
           </div>
-          <div v-else-if="factor instanceof OutcomeFactor">
-            <OutcomeDisplay
-              :factor="factor"
-              @update="updateFactor(index, $event)"
-            />
-          </div>
+          <OutcomeDisplay
+            v-else-if="factor instanceof OutcomeFactor"
+            :factor="factor"
+            @update="updateFactor(index, $event)"
+          />
           <div v-else>
             {{ factor.name }}
           </div>
