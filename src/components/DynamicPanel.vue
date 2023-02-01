@@ -68,7 +68,23 @@ import OutcomeDisplay from '@/components/OutcomeDisplay.vue'
 
 const emit = defineEmits(['change'])
 
-let dynamicFields: Ref<DynamicFactor[]> = ref([])
+const buyHouse = new BuySomethingFactor('House', 700000, 2028)
+const incomeRobin = new IncomeFactor('Gehalt Robin', 3600, 0.03, 2024)
+const incomeMaren = new IncomeFactor('Gehalt Maren', 3000, 0.01, 2024)
+const child1 = new MonthlyOutcomeFactor('Erstes Kind', 250, 0.03, 2027, 2049)
+const child2 = new MonthlyOutcomeFactor('Zweites Kind', 250, 0.03, 2029, 2051)
+const urlaub = new YearlyOutcomeFactor('Urlaub', 4000, 0.03, 2024, 2060)
+const unterhalt = new MonthlyOutcomeFactor('Unterhalt', 1000, 0.03, 2024, 2060)
+const initialFields = [
+  buyHouse,
+  incomeRobin,
+  incomeMaren,
+  child1,
+  child2,
+  urlaub,
+  unterhalt,
+]
+let dynamicFields: Ref<DynamicFactor[]> = ref([...initialFields])
 
 const addFactor = (newFactor: DynamicFactor) => {
   dynamicFields.value.push(newFactor)
@@ -84,37 +100,12 @@ const updateFactor = (index: number, newFactor: DynamicFactor) => {
     dynamicFields.value.map((field) => field.factor),
   )
 }
-
-const buyHouse = new BuySomethingFactor('House', 700000, 2028)
-const incomeRobin = new IncomeFactor('Gehalt Robin', 3600, 0.03, 2024)
-const incomeMaren = new IncomeFactor('Gehalt Maren', 3000, 0.01, 2024)
-const child1 = new MonthlyOutcomeFactor('Erstes Kind', 250, 0.03, 2027, 2049)
-const child2 = new MonthlyOutcomeFactor('Zweites Kind', 250, 0.03, 2029, 2051)
-const urlaub = new YearlyOutcomeFactor('Urlaub', 4000, 0.03, 2024, 2060)
-const unterhalt = new MonthlyOutcomeFactor('Unterhalt', 1000, 0.03, 2024, 2060)
-addFactor(buyHouse)
-addFactor(incomeRobin)
-addFactor(incomeMaren)
-addFactor(child1)
-addFactor(child2)
-addFactor(urlaub)
-addFactor(unterhalt)
+emit(
+  'change',
+  dynamicFields.value.map((field) => field.factor),
+)
 </script>
-<style lang="scss">
-.house {
-  display: flex;
-  align-items: center;
-  padding-top: 1rem;
-}
-.multi-input {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem 0.5rem;
-
-  * {
-    width: 80%;
-  }
-}
+<style lang="scss" scoped>
 .factor-label {
   width: 30%;
   margin-bottom: 0;
