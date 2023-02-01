@@ -2,34 +2,34 @@
   <q-menu>
     <div class="row no-wrap q-pa-md">
       <div class="column">
-        <div class="text-h6">Ausgabe</div>
+        <div class="text-h6">Outcome</div>
         <q-input dense class="q-mb-sm" v-model="name" label="Name" />
-        <q-input dense class="q-mb-sm" v-model="outcome" label="Ausgabe" />
+        <q-input dense class="q-mb-sm" v-model="outcome" label="Amount" />
         <q-input
           dense
           class="q-mb-sm"
           v-model="outcomeChange"
-          label="Inflation (Jährlich)"
+          label="Inflation (yearly)"
         />
         <div class="row no-wrap justify-between">
           <q-select
             size="sm"
             v-model="fromYear"
             :options="yearOptions"
-            label="Von"
+            label="From"
           />
           <q-select
             size="sm"
             v-model="toYear"
             :options="yearOptions"
-            label="Bis"
+            label="To"
           />
         </div>
         <q-toggle
           v-model="monthly"
           :label="monthly"
-          true-value="monatlich"
-          false-value="jährlich"
+          true-value="monthly"
+          false-value="yearly"
         />
         <q-btn
           color="primary"
@@ -63,13 +63,13 @@ const emit = defineEmits(['update'])
 const name: Ref<string> = ref('')
 const outcome: Ref<Number> = ref(2500)
 const outcomeChange: Ref<Number> = ref(0.03)
-const monthly: Ref<string> = ref('monatlich')
+const monthly: Ref<string> = ref('monthly')
 const fromYear: Ref<Number> = ref(props.startYear)
 const toYear: Ref<Number> = ref(props.endYear)
 const yearOptions: Ref<Number[]> = ref(R.range(props.startYear, props.endYear))
 
 const newOutcome = () => {
-  if (monthly.value === 'monatlich') {
+  if (monthly.value === 'monthly') {
     emit(
       'update',
       new MonthlyOutcomeFactor(

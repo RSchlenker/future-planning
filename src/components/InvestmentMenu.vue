@@ -2,14 +2,14 @@
   <q-menu>
     <div class="row no-wrap q-pa-md">
       <div class="column">
-        <div class="text-h6">Investition</div>
+        <div class="text-h6">Investment</div>
         <q-input dense class="q-mb-sm" v-model="name" label="Name" />
-        <q-input dense class="q-mb-sm" v-model="price" label="Preis" />
+        <q-input dense class="q-mb-sm" v-model="price" label="Price" />
         <q-select
           size="sm"
           v-model="year"
           :options="yearOptions"
-          label="Jahr"
+          label="Year"
         />
         <q-btn
           color="primary"

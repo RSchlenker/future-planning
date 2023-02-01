@@ -2,19 +2,19 @@
   <q-menu>
     <div class="row no-wrap q-pa-md">
       <div class="column">
-        <div class="text-h6">Einkommen</div>
+        <div class="text-h6">Income</div>
         <q-input dense class="q-mb-sm" v-model="name" label="Name" />
         <q-input
           dense
           class="q-mb-sm"
           v-model="income"
-          label="Monatseinkommen (Netto)"
+          label="Monthly Income (Netto)"
         />
         <q-input
           dense
           class="q-mb-sm"
           v-model="incomeChange"
-          label="Gehaltsentwicklung (Jährlich)"
+          label="Yearly change"
         />
         <q-btn
           color="primary"
